@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "169297822021",
+    "project_id": "neighborconect",
+    "storage_bucket": "neighborconect.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:169297822021:android:df2fedcaf3ded81a4cbe2c",
+        "android_client_info": {
+          "package_name": "net.iessochoa.neighborconect"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "169297822021-c17q2kghlr9l6ts15cbl67gdn92ck67l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvX9LyNdGMJYs1AmMcjeo-Aul_LcoicgU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "169297822021-c17q2kghlr9l6ts15cbl67gdn92ck67l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
