@@ -60,21 +60,21 @@ public class RegistrarseActivity extends AppCompatActivity {
 
         if (etPass.getText().toString().equals(etPassConfirmar.getText().toString())) {
 
-            mAuth.createUserWithEmailAndPassword(etEmail.getText().toString(), etPass.getText().toString())
+            mAuth.createUserWithEmailAndPassword(etEmail.getText().toString().trim(), etPass.getText().toString().trim())
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
-                                Toast.makeText(getApplicationContext(), "Usuario creado",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), getString(R.string.usuario_creado),Toast.LENGTH_SHORT).show();
                                 Log.d(TAG, "createUserWithEmail:success");
                                 FirebaseUser user = mAuth.getCurrentUser();
-                                Intent i = new Intent(getApplicationContext(),MainActivity.class);
-                                startActivity(i);
+                                finish();
+
                                 //updateUI(user);
                             } else {
                                 // If sign in fails, display a message to the user.
-                                Log.w(TAG, "createUserwithEmail:failure", task.getException());
+                                Log.w(TAG, "createUserWithEmail:failure", task.getException());
                                 Toast.makeText(getApplicationContext(), "Authentication failed.",Toast.LENGTH_SHORT).show();
                                 //updateUI(null);
 
@@ -82,7 +82,7 @@ public class RegistrarseActivity extends AppCompatActivity {
                         }
                     });
         } else {
-            Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.error_pass), Toast.LENGTH_SHORT).show();
         }
 
 

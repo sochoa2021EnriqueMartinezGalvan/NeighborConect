@@ -12,6 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NeighborConect">
         <activity
+            android:name=".PantallaPrincipalActivity"
+            android:exported="true"
+            android:label="@string/title_activity_pantalla_principal"
+            android:theme="@style/Theme.NeighborConect.NoActionBar" />
+        <activity
             android:name=".InicioSesionActivity"
             android:exported="true" />
         <activity

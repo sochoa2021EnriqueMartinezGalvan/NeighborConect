@@ -3,4 +3,19 @@
     <string name="iniciar_sesion">Iniciar sesion</string>
     <string name="registrarse">Registrarse</string>
     <string name="email">Email</string>
+    <string name="usuario_creado">Usuario creado</string>
+    <string name="iniciando_sesion">Iniciando sesion</string>
+    <string name="error_pass">Las contraseñas no coinciden</string>
+    <string name="error_inicio_sesion">El e-mail o la contraseña estan mal</string>
+    <string name="title_activity_pantalla_principal">PantallaPrincipalActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
 </resources>
