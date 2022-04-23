@@ -1,5 +1,6 @@
 package net.iessochoa.neighborconect;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
@@ -25,6 +26,8 @@ public class PantallaPrincipalActivity extends AppCompatActivity {
     private ActivityPantallaPrincipalBinding binding;
 
     private FirebaseAuth mAuth;
+
+    private TextView tvUsuario,tvCerrarSesion;
 
 
     @Override
@@ -58,13 +61,22 @@ public class PantallaPrincipalActivity extends AppCompatActivity {
 
         NavigationView navigation = (NavigationView) findViewById(R.id.nav_view);
         View headerView = navigation.getHeaderView(0);
-        TextView tvUsuario = (TextView) headerView.findViewById(R.id.tvUsuario);
+
+         tvUsuario =  headerView.findViewById(R.id.tvUsuario);
 
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser userFB = mAuth.getCurrentUser();
 
         tvUsuario.setText(userFB.getEmail());
+
+        tvCerrarSesion=headerView.findViewById(R.id.tvCerrarSesion);
+        tvCerrarSesion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cerrarSesion();
+            }
+        });
 
 
     }
@@ -81,5 +93,11 @@ public class PantallaPrincipalActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_pantalla_principal);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    public void cerrarSesion(){
+        mAuth.signOut();
+        startActivity(new Intent(PantallaPrincipalActivity.this, MainActivity.class));
+        finish();
     }
 }
