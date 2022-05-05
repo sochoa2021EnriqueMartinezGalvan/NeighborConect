@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -27,7 +28,8 @@ public class PantallaPrincipalActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
 
-    private TextView tvUsuario,tvCerrarSesion;
+    private TextView tvUsuario, tvCerrarSesion;
+    private Button btCrear;
 
 
     @Override
@@ -38,13 +40,13 @@ public class PantallaPrincipalActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.appBarPantallaPrincipal.toolbar);
-        binding.appBarPantallaPrincipal.fab.setOnClickListener(new View.OnClickListener() {
+        /*binding.appBarPantallaPrincipal.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });
+        });*/
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each
@@ -57,12 +59,20 @@ public class PantallaPrincipalActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+        btCrear = findViewById(R.id.btCrear);
+
+        btCrear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                crearComunidad();
+            }
+        });
 
 
         NavigationView navigation = (NavigationView) findViewById(R.id.nav_view);
         View headerView = navigation.getHeaderView(0);
 
-         tvUsuario =  headerView.findViewById(R.id.tvUsuario);
+        tvUsuario = headerView.findViewById(R.id.tvUsuario);
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -70,7 +80,7 @@ public class PantallaPrincipalActivity extends AppCompatActivity {
 
         tvUsuario.setText(userFB.getEmail());
 
-        tvCerrarSesion=headerView.findViewById(R.id.tvCerrarSesion);
+        tvCerrarSesion = headerView.findViewById(R.id.tvCerrarSesion);
         tvCerrarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,9 +105,17 @@ public class PantallaPrincipalActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-    public void cerrarSesion(){
+    public void cerrarSesion() {
         mAuth.signOut();
-        startActivity(new Intent(PantallaPrincipalActivity.this, MainActivity.class));
         finish();
+        startActivity(new Intent(this, MainActivity.class));
+
     }
+
+    public void crearComunidad() {
+
+        startActivity(new Intent(this, CrearComunidad.class));
+
+    }
+
 }

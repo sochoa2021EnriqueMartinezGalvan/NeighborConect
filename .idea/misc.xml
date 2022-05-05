@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Usuario/AndroidStudioProjects/NeighborConect/app/src/main/res/layout/activity_crear_comunidad.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/NeighborConect/app/src/main/res/layout/activity_inicio_sesion.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/NeighborConect/app/src/main/res/layout/activity_main.xml" value="0.2957427536231884" />
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/NeighborConect/app/src/main/res/layout/activity_pantalla_principal.xml" value="0.36666666666666664" />
@@ -14,6 +15,7 @@
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/NeighborConect/app/src/main/res/layout/fragment_slideshow.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/NeighborConect/app/src/main/res/layout/nav_header_pantalla_principal.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/NeighborConect/app/src/main/res/menu/activity_main_drawer.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Usuario/AndroidStudioProjects/NeighborConect/app/src/main/res/menu/pantalla_principal.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>
@@ -22,5 +24,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.36666666666666664" />
+      </ProjectState>
+    </option>
   </component>
 </project>

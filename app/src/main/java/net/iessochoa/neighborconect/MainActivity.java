@@ -2,6 +2,7 @@ package net.iessochoa.neighborconect;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
             // Abrimos la actividad que contiene el inicio de la funcionalidad de la app.
             startActivity(new Intent(this, PantallaPrincipalActivity.class));
         } else {//en otro caso iniciamos FirebaseUI
-            createSignInIntent();
+
         }
     }
 
@@ -67,17 +68,14 @@ public class MainActivity extends AppCompatActivity {
         // Create and launch sign-in intent
         Intent signInIntent = AuthUI.getInstance()
                 .createSignInIntentBuilder()
-// Si quisieramos varios proveedores de autenticación. Mirar la documentación oficial, ya que cambia de una versión a otra
-//https://firebase.google.com/docs/auth/android/firebaseui?hl=es-419#sign_in
-                //icono que mostrará, a mi no me funciona
-               // .setLogo(R.drawable.ic_logo)
+
                 .setIsSmartLockEnabled(false)//para guardar contraseñas y usuario:  true
                 .build();
         signInLauncher.launch(signInIntent);
         // [END auth_fui_create_intent]
     }
 
-    private void onSignInResult(FirebaseAuthUIAuthenticationResult result) {
+    private void onSignInResult(@NonNull FirebaseAuthUIAuthenticationResult result) {
         IdpResponse response = result.getIdpResponse();
         if (result.getResultCode() == RESULT_OK) {
             //si estamos autenticados abrimos la actividad principal
