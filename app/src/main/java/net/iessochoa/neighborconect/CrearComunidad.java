@@ -18,8 +18,8 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
+//import com.google.firebase.firestore.DocumentReference;
+//import com.google.firebase.firestore.FirebaseFirestore;
 
 import net.iessochoa.neighborconect.model.Comunidades;
 
@@ -73,7 +73,7 @@ public class CrearComunidad extends AppCompatActivity {
         user.put("born", 1815);
 
 // Add a new document with a generated ID
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+       /* FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("users")
                 .add(user)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -88,7 +88,7 @@ public class CrearComunidad extends AppCompatActivity {
                         Log.w(TAG, "Error adding document", e);
                     }
                 });
-
+*/
         finish();
 
 
