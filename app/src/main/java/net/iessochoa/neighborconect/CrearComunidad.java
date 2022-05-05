@@ -15,11 +15,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+
 import com.google.firebase.auth.FirebaseAuth;
-//import com.google.firebase.firestore.DocumentReference;
-//import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 
 import net.iessochoa.neighborconect.model.Comunidades;
 
@@ -55,40 +54,23 @@ public class CrearComunidad extends AppCompatActivity {
     }
 
     private void insertarDatos() {
-        /*String nombre = etName.getText().toString();
+        //Codigo para insertar comunidades
+        String nombre = etName.getText().toString();
         String code = etCode.getText().toString();
 
-        auth = FirebaseAuth.getInstance();
 
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        Comunidades comunidad= new Comunidades(nombre,code);
-
-        db.collection("comu").add(comunidad);
-*/
-        // Create a new user with a first and last name
         Map<String, Object> user = new HashMap<>();
         user.put("first", "Ada");
         user.put("last", "Lovelace");
         user.put("born", 1815);
 
-// Add a new document with a generated ID
-       /* FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("users")
-                .add(user)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
-                    }
-                });
-*/
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Comunidades comunidad= new Comunidades(nombre,code);
+
+       db.collection("usr").add(user);
+
+
         finish();
 
 
