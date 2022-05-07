@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Usuario/AndroidStudioProjects/NeighborConect - copia/app/src/main/res/layout/activity_introducir_codigo.xml" value="0.35643115942028986" />
+        <entry key="..\:/Users/Usuario/AndroidStudioProjects/NeighborConect - copia/app/src/main/res/layout/activity_pantalla_principal.xml" value="0.35643115942028986" />
+        <entry key="..\:/Users/Usuario/AndroidStudioProjects/NeighborConect - copia/app/src/main/res/layout/content_pantalla_principal.xml" value="0.35643115942028986" />
+        <entry key="..\:/Users/Usuario/AndroidStudioProjects/NeighborConect - copia/app/src/main/res/layout/fragment_home.xml" value="0.35643115942028986" />
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/NeighborConect/app/src/main/res/layout/activity_crear_comunidad.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/NeighborConect/app/src/main/res/layout/activity_inicio_sesion.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/NeighborConect/app/src/main/res/layout/activity_main.xml" value="0.2957427536231884" />

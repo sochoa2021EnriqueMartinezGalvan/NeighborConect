@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NeighborConect">
         <activity
+            android:name=".IntroducirCodigo"
+            android:exported="true" />
+        <activity
             android:name=".CrearComunidad"
             android:exported="true" />
         <activity

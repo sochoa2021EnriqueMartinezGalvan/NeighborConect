@@ -29,7 +29,7 @@ public class PantallaPrincipalActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
     private TextView tvUsuario, tvCerrarSesion;
-    private Button btCrear;
+    private Button btCrear,btEntrar;
 
 
     @Override
@@ -60,11 +60,18 @@ public class PantallaPrincipalActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
 
         btCrear = findViewById(R.id.btCrear);
+        btEntrar = findViewById(R.id.btEntar);
 
         btCrear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 crearComunidad();
+            }
+        });
+        btEntrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                entrarComunidad();
             }
         });
 
@@ -91,6 +98,8 @@ public class PantallaPrincipalActivity extends AppCompatActivity {
 
     }
 
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -116,6 +125,10 @@ public class PantallaPrincipalActivity extends AppCompatActivity {
 
         startActivity(new Intent(this, CrearComunidad.class));
 
+    }
+
+    private void entrarComunidad() {
+        startActivity(new Intent(this, IntroducirCodigo.class));
     }
 
 }

@@ -4,6 +4,9 @@ public class Comunidades {
     String code;
     String name;
 
+    public Comunidades() {
+    }
+
     public Comunidades(String code, String name) {
         this.code = code;
         this.name = name;
