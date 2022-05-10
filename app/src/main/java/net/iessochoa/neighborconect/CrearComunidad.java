@@ -75,7 +75,7 @@ public class CrearComunidad extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "El codigo ya esta en uso", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getApplicationContext(), "Comunidad Creada", Toast.LENGTH_SHORT).show();
-                    //insertarDatos(code, nombre);
+                    insertarDatos(code, nombre);
                 }
 
             }

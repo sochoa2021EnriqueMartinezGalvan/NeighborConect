@@ -12,6 +12,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NeighborConect">
         <activity
+            android:name=".Crear_Incidencias"
+            android:exported="true" />
+        <activity
+            android:name=".Comunidad_Incidencias"
+            android:exported="true" />
+        <activity
+            android:name=".ComunidadesActivity"
+            android:exported="true"
+            android:label="@string/title_activity_comunidades"
+            android:theme="@style/Theme.NeighborConect.NoActionBar" />
+        <activity
+            android:name=".ComunidadActivity"
+            android:exported="true"
+            android:label="@string/title_activity_comunidad"
+            android:theme="@style/Theme.NeighborConect.NoActionBar" />
+        <activity
+            android:name=".Comunidad"
+            android:exported="true" />
+        <activity
             android:name=".IntroducirCodigo"
             android:exported="true" />
         <activity

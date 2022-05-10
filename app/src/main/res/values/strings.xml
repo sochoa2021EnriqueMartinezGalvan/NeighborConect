@@ -18,4 +18,6 @@
     <string name="menu_home">Inicio</string>
     <string name="menu_gallery">Perfil</string>
     <string name="menu_slideshow">Ajustes</string>
+    <string name="title_activity_comunidad">Comunidad</string>
+    <string name="title_activity_comunidades">ComunidadesActivity</string>
 </resources>
