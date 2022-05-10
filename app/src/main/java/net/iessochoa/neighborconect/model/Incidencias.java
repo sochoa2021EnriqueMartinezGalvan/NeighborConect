@@ -12,6 +12,9 @@ public class Incidencias {
     @ServerTimestamp
     private Date fechaCreacion;
 
+    public Incidencias() {
+    }
+
     public Incidencias(String usuario, String descripcion) {
         this.usuario = usuario;
         this.descripcion = descripcion;
