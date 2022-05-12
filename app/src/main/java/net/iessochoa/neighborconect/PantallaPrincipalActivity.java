@@ -11,6 +11,9 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -21,6 +24,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import net.iessochoa.neighborconect.databinding.ActivityPantallaPrincipalBinding;
 
+import java.util.concurrent.atomic.AtomicMarkableReference;
+
 public class PantallaPrincipalActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -30,6 +35,8 @@ public class PantallaPrincipalActivity extends AppCompatActivity {
 
     private TextView tvUsuario, tvCerrarSesion;
     private Button btCrear,btEntrar;
+
+
 
 
     @Override
@@ -62,6 +69,7 @@ public class PantallaPrincipalActivity extends AppCompatActivity {
         btCrear = findViewById(R.id.btCrear);
         btEntrar = findViewById(R.id.btEntar);
 
+
         btCrear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,6 +82,7 @@ public class PantallaPrincipalActivity extends AppCompatActivity {
                 entrarComunidad();
             }
         });
+
 
 
         NavigationView navigation = (NavigationView) findViewById(R.id.nav_view);

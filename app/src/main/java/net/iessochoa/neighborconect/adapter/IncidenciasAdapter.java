@@ -1,16 +1,18 @@
 package net.iessochoa.neighborconect.adapter;
 
 import android.app.AlertDialog;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
@@ -20,6 +22,7 @@ import net.iessochoa.neighborconect.model.Incidencias;
 public class IncidenciasAdapter extends FirestoreRecyclerAdapter<Incidencias, IncidenciasAdapter.IncidenciasHolder> {
 
     private String descripcion,usuario,fecha;
+    Uri uriFoto=null;
 
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
@@ -44,6 +47,11 @@ public class IncidenciasAdapter extends FirestoreRecyclerAdapter<Incidencias, In
             System.out.println("Error");
         }
 
+
+
+        Glide.with(holder.ivFotoIncidencias.getContext()).load(uriFoto).into(holder.ivFotoIncidencias);
+
+
         /*descripcion=incidencias.getDescripcion();
         usuario=incidencias.getUsuario();
         fecha=incidencias.getFechaCreacion().toString();*/
@@ -62,28 +70,39 @@ public class IncidenciasAdapter extends FirestoreRecyclerAdapter<Incidencias, In
     public class IncidenciasHolder extends RecyclerView.ViewHolder {
         private TextView tvDescripcion,tvcreador,tvFecha;
         private CardView cvContenedor;
+        private ImageView ivFotoIncidencias;
 
         public IncidenciasHolder(@NonNull View itemView) {
             super(itemView);
 
             tvDescripcion=itemView.findViewById(R.id.tvDescripcion);
-            cvContenedor=itemView.findViewById(R.id.cvContenedor);
+            cvContenedor=itemView.findViewById(R.id.cvContenedor1);
             tvcreador=itemView.findViewById(R.id.tvCreador);
             tvFecha=itemView.findViewById(R.id.tvFecha);
+            ivFotoIncidencias=itemView.findViewById(R.id.ivFotoIncidencia);
 
             cvContenedor.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                     builder.setTitle("Creador: "+tvcreador.getText().toString());
-                    builder.setMessage("Fecha: "+tvFecha.getText().toString()+"\n"+tvDescripcion.getText().toString());
+                    builder.setMessage("Fecha: "+tvFecha.getText().toString()+"\nDescripcion de la incidencia: \n"+tvDescripcion.getText().toString());
                     builder.setPositiveButton("Aceptar", null);
 
                     AlertDialog dialog = builder.create();
                     dialog.show();
-                    //Toast.makeText(v.getContext(), descripcion, Toast.LENGTH_SHORT).show();
+
                 }
+
+
+
             });
+
+
+
+        }
+
+        public void obtenerImagen(){
 
 
 

@@ -1,7 +1,5 @@
 package net.iessochoa.neighborconect;
 
-import static android.content.ContentValues.TAG;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -9,70 +7,48 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.firebase.ui.common.ChangeEventType;
 import com.firebase.ui.firestore.ChangeEventListener;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import net.iessochoa.neighborconect.adapter.IncidenciasAdapter;
 import net.iessochoa.neighborconect.model.Incidencias;
-import net.iessochoa.neighborconect.model.Usuarios;
 
-public class Comunidad_Incidencias extends AppCompatActivity {
+public class MisIncidencias extends AppCompatActivity {
 
-    private FloatingActionButton fabCrearIncidencia;
-    private String idComunidad;
-
-
-
-
-
-    RecyclerView rvIncidencias;
-    IncidenciasAdapter adapter;
+    private RecyclerView rvMisincidencias;
+    private IncidenciasAdapter adapter;
+    private String idComunidad,email;
+    private FirebaseAuth mAuth;
+    private String numMensajes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_comunidad_incidencias);
+        setContentView(R.layout.activity_mis_incidencias);
 
-        //RecyclerView
-        rvIncidencias = findViewById(R.id.rvIncidencias);
-        rvIncidencias.setLayoutManager(new LinearLayoutManager(this));
-
+        rvMisincidencias = findViewById(R.id.rvMisIncidencias);
+        rvMisincidencias.setLayoutManager(new LinearLayoutManager(this));
 
         idComunidad = getIntent().getStringExtra("idComunidad");
 
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser userFB = mAuth.getCurrentUser();
+
+        email= userFB.getEmail();
+
         defineAdaptador();
 
-
-        fabCrearIncidencia = findViewById(R.id.fabAddIncidencias);
-
-        fabCrearIncidencia.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), Crear_Incidencias.class);
-                i.putExtra("idComunidad", idComunidad);
-                startActivity(i);
-
-            }
-        });
     }
 
     @Override
@@ -82,21 +58,22 @@ public class Comunidad_Incidencias extends AppCompatActivity {
         inflater.inflate(R.menu.menu_comunidad, menu);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
 
-            case R.id.action_misIncidencias:
-                Intent i = new Intent(this, MisIncidencias.class);
+            case R.id.action_com:
+                Intent i = new Intent(this, Comunidad_Incidencias.class);
                 i.putExtra("idComunidad", idComunidad);
+
                 startActivity(i);
                 finish();
                 return true;
             case R.id.action_chat:
                 Intent i2 = new Intent(this, Chat.class);
                 i2.putExtra("idComunidad", idComunidad);
+
                 startActivity(i2);
                 finish();
                 return true;
@@ -117,7 +94,7 @@ public class Comunidad_Incidencias extends AppCompatActivity {
                 .collection("Incidencias")
 //obtenemos la lista ordenada por fecha
                 .orderBy("fechaCreacion",
-                        Query.Direction.DESCENDING);
+                        Query.Direction.DESCENDING).whereEqualTo("usuario",email);
 //Creamos la opciones del FirebaseAdapter
         FirestoreRecyclerOptions<Incidencias> options = new
                 FirestoreRecyclerOptions.Builder<Incidencias>()
@@ -132,7 +109,7 @@ public class Comunidad_Incidencias extends AppCompatActivity {
 //Creamos el adaptador
         adapter = new IncidenciasAdapter(options);
 //asignamos el adaptador
-        rvIncidencias.setAdapter(adapter);
+        rvMisincidencias.setAdapter(adapter);
 //comenzamos a escuchar. Normalmente solo tenemos un adaptador, esto  tenemos que
         //hacerlo en el evento onStar, como indica la documentación
         adapter.startListening();
@@ -143,7 +120,7 @@ public class Comunidad_Incidencias extends AppCompatActivity {
             @Override
             public void onChildChanged(@NonNull ChangeEventType type, @NonNull
                     DocumentSnapshot snapshot, int newIndex, int oldIndex) {
-                rvIncidencias.smoothScrollToPosition(0);
+                rvMisincidencias.smoothScrollToPosition(0);
             }
 
             @Override
@@ -155,15 +132,5 @@ public class Comunidad_Incidencias extends AppCompatActivity {
             }
         });
     }
-
-
-
-    //es necesario parar la escucha
-    @Override
-    protected void onStop() {
-        super.onStop();
-        adapter.stopListening();
-    }
-
 
 }

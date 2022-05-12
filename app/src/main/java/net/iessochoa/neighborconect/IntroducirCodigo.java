@@ -38,6 +38,9 @@ public class IntroducirCodigo extends AppCompatActivity {
     private ArrayList<Comunidades> listaComunidades;
     private Map<String, String> doc = new HashMap<>();
     private Map<String, String> usr = new HashMap<>();
+    private Map<String, String> usuarios_Comunidad = new HashMap<>();
+
+
 
     private String email, code, documentId,user_email=null;
 
@@ -76,11 +79,10 @@ public class IntroducirCodigo extends AppCompatActivity {
                 if (existe) {
                     Toast.makeText(getApplicationContext(), "Entrando a la comunidad", Toast.LENGTH_SHORT).show();
 
-                   // leerUsurarios();
-                   // user_email=usr.get(email);
-                   // if (user_email!=null){
-                      //  entrarComunidad();
-                   // }
+
+                   // entrarComunidad();
+                    usuariosComunidad();
+
 
 
                     Intent i = new Intent(IntroducirCodigo.this, Comunidad_Incidencias.class);
@@ -93,6 +95,24 @@ public class IntroducirCodigo extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void usuariosComunidad() {
+
+        usuarios_Comunidad.put("comunidadId",documentId);
+        usuarios_Comunidad.put("code",code);
+
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        
+        
+
+// Add a new document with a generated ID
+       db.collection("Usuarios").document(email).set(usuarios_Comunidad);
+
+
+
+        finish();
     }
 
 
