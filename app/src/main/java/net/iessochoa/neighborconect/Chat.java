@@ -42,7 +42,7 @@ import java.util.ArrayList;
 
 public class Chat extends AppCompatActivity {
 
-    private String idComunidad, usuario;
+    private String idComunidad, numMensajes, usuario;
     private EditText etMensaje;
     private Button btEnviarMensaje;
 
@@ -51,8 +51,7 @@ public class Chat extends AppCompatActivity {
     private RecyclerView rvChat;
     private ChatAdapter adapter;
 
-    private int a =0;
-
+    private int a = 0;
 
 
     @Override
@@ -65,10 +64,19 @@ public class Chat extends AppCompatActivity {
 
         idComunidad = getIntent().getStringExtra("idComunidad");
 
+        numMensajes = getIntent().getStringExtra("numMensajes");
 
         usuario = userFB.getEmail();
         rvChat = findViewById(R.id.rvChat);
         rvChat.setLayoutManager(new LinearLayoutManager(this));
+        rvChat.setNestedScrollingEnabled(false);
+
+
+        try {
+            defineAdaptador();
+        } catch (Exception ex) {
+            System.out.println(ex.getCause());
+        }
 
         etMensaje = findViewById(R.id.etMensaje);
         btEnviarMensaje = findViewById(R.id.btEnviarMensaje);
@@ -77,19 +85,15 @@ public class Chat extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 enviarMensaje();
+                defineAdaptador();
+
             }
         });
 
 
-        try {
-            defineAdaptador();
-        }catch(Exception ex){
-            System.out.println(ex.getCause());
-        }
 
 
     }
-
 
 
     private void enviarMensaje() {
@@ -163,14 +167,22 @@ public class Chat extends AppCompatActivity {
             @Override
             public void onChildChanged(@NonNull ChangeEventType type, @NonNull
                     DocumentSnapshot snapshot, int newIndex, int oldIndex) {
+                /*int n=1;
+                try {
+                   n= Integer.parseInt(numMensajes);
+                    a += 1;
 
-                a+= 1;
+                    rvChat.smoothScrollToPosition(n-1);
+                }catch (Exception e){
 
-                rvChat.smoothScrollToPosition(a-1);
+                }*/
+
+
             }
 
             @Override
             public void onDataChanged() {
+
             }
 
             @Override
@@ -187,7 +199,7 @@ public class Chat extends AppCompatActivity {
             case R.id.action_misIncidencias:
                 Intent i = new Intent(this, MisIncidencias.class);
                 i.putExtra("idComunidad", idComunidad);
-
+                i.putExtra("numMensajes", numMensajes);
                 startActivity(i);
                 finish();
                 return true;
@@ -195,7 +207,7 @@ public class Chat extends AppCompatActivity {
             case R.id.action_com:
                 Intent i2 = new Intent(this, Comunidad_Incidencias.class);
                 i2.putExtra("idComunidad", idComunidad);
-
+                i2.putExtra("numMensajes", numMensajes);
                 startActivity(i2);
                 finish();
                 return true;

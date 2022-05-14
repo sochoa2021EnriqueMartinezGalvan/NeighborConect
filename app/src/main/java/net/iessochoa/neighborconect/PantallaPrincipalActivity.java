@@ -1,20 +1,27 @@
 package net.iessochoa.neighborconect;
 
+import static android.content.ContentValues.TAG;
+
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.android.material.snackbar.Snackbar;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -24,7 +31,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import net.iessochoa.neighborconect.databinding.ActivityPantallaPrincipalBinding;
 
-import java.util.concurrent.atomic.AtomicMarkableReference;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class PantallaPrincipalActivity extends AppCompatActivity {
 
@@ -35,7 +44,12 @@ public class PantallaPrincipalActivity extends AppCompatActivity {
 
     private TextView tvUsuario, tvCerrarSesion;
     private Button btCrear,btEntrar;
+    private int numComunidadesUsuario=0;
 
+    private String email;
+
+    private ArrayList<String> idComunidadesList = new ArrayList();
+    private ArrayList<String> idComunidadesList2 = new ArrayList();
 
 
 
@@ -70,6 +84,7 @@ public class PantallaPrincipalActivity extends AppCompatActivity {
         btEntrar = findViewById(R.id.btEntar);
 
 
+
         btCrear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,6 +100,7 @@ public class PantallaPrincipalActivity extends AppCompatActivity {
 
 
 
+
         NavigationView navigation = (NavigationView) findViewById(R.id.nav_view);
         View headerView = navigation.getHeaderView(0);
 
@@ -96,6 +112,9 @@ public class PantallaPrincipalActivity extends AppCompatActivity {
 
         tvUsuario.setText(userFB.getEmail());
 
+        email = userFB.getEmail();
+
+
         tvCerrarSesion = headerView.findViewById(R.id.tvCerrarSesion);
         tvCerrarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,9 +123,16 @@ public class PantallaPrincipalActivity extends AppCompatActivity {
             }
         });
 
+        idComunidades();
+        idComunidades2();
+
 
     }
 
+    private void idComunidades2() {
+
+
+    }
 
 
     @Override
@@ -138,6 +164,80 @@ public class PantallaPrincipalActivity extends AppCompatActivity {
 
     private void entrarComunidad() {
         startActivity(new Intent(this, IntroducirCodigo.class));
+    }
+
+    private void numComunidadesusuario() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        for (String str : idComunidadesList) {
+
+
+            db.collection("Comunidades").document(str).collection("Usuarios_Comunidad").whereEqualTo("email",email)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    Log.d(TAG, document.getId() + " => " +
+                                            document.getData());
+                                    numComunidadesUsuario+=1;
+                                    idComunidadesList2.add(str);
+                                }
+                                SharedPreferences settings = getSharedPreferences("ncu", Activity.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = settings.edit();
+
+                                Set<String> set = new HashSet<String>();
+
+                                set.addAll(idComunidadesList2);
+
+                                editor.putInt("ncu",numComunidadesUsuario);
+                                editor.putStringSet("idCom",set);
+                                editor.commit();
+
+
+                            } else {
+                                Log.d(TAG, "Error getting documents: ",
+                                        task.getException());
+                            }
+                        }
+                    });
+
+
+
+        }
+
+
+
+
+    }
+
+    private void idComunidades() {
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("Comunidades").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " +
+                                        document.getData());
+
+                                idComunidadesList.add(document.getId());
+                            }
+                            numComunidadesusuario();
+
+
+
+                        } else {
+                            Log.d(TAG, "Error getting documents: ",
+                                    task.getException());
+                        }
+                    }
+                });
+
     }
 
 }

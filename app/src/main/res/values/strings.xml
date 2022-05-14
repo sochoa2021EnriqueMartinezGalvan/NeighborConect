@@ -20,4 +20,7 @@
     <string name="menu_slideshow">Ajustes</string>
     <string name="title_activity_comunidad">Comunidad</string>
     <string name="title_activity_comunidades">ComunidadesActivity</string>
+    <string name="confirmar">Confirmar</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="ncu">0</string>
 </resources>

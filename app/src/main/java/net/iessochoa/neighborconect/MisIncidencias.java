@@ -41,7 +41,7 @@ public class MisIncidencias extends AppCompatActivity {
         rvMisincidencias.setLayoutManager(new LinearLayoutManager(this));
 
         idComunidad = getIntent().getStringExtra("idComunidad");
-
+        numMensajes = getIntent().getStringExtra("numMensajes");
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser userFB = mAuth.getCurrentUser();
 
@@ -67,13 +67,14 @@ public class MisIncidencias extends AppCompatActivity {
                 Intent i = new Intent(this, Comunidad_Incidencias.class);
                 i.putExtra("idComunidad", idComunidad);
 
+                i.putExtra("numMensajes",numMensajes);
                 startActivity(i);
                 finish();
                 return true;
             case R.id.action_chat:
                 Intent i2 = new Intent(this, Chat.class);
                 i2.putExtra("idComunidad", idComunidad);
-
+                i2.putExtra("numMensajes",numMensajes);
                 startActivity(i2);
                 finish();
                 return true;

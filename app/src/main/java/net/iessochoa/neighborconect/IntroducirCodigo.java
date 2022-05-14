@@ -29,6 +29,7 @@ import net.iessochoa.neighborconect.model.Usuarios;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class IntroducirCodigo extends AppCompatActivity {
@@ -39,6 +40,7 @@ public class IntroducirCodigo extends AppCompatActivity {
     private Map<String, String> doc = new HashMap<>();
     private Map<String, String> usr = new HashMap<>();
     private Map<String, String> usuarios_Comunidad = new HashMap<>();
+    private Map<String, List<String>> comunidades = new HashMap<>();
 
 
 
@@ -80,7 +82,8 @@ public class IntroducirCodigo extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Entrando a la comunidad", Toast.LENGTH_SHORT).show();
 
 
-                   // entrarComunidad();
+                    entrarComunidad();
+
                     usuariosComunidad();
 
 
@@ -99,17 +102,16 @@ public class IntroducirCodigo extends AppCompatActivity {
 
     private void usuariosComunidad() {
 
-        usuarios_Comunidad.put("comunidadId",documentId);
-        usuarios_Comunidad.put("code",code);
 
+      List<String> c = comunidades.get(documentId);
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        
+      Comunidades com = new Comunidades(c.get(0),c.get(1));
+
+      FirebaseFirestore db = FirebaseFirestore.getInstance();
         
 
 // Add a new document with a generated ID
-       db.collection("Usuarios").document(email).set(usuarios_Comunidad);
-
+       db.collection("Usuarios").document(email).collection("Comunidades").document(documentId).set(com);
 
 
         finish();
@@ -124,20 +126,8 @@ public class IntroducirCodigo extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 // Add a new document with a generated ID
-        db.collection("Comunidades").document(documentId).collection("Usuarios_Comunidad_"+documentId).add(usr)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
-                    }
-                });
-
+        db.collection("Comunidades").document(documentId)
+            .collection("Usuarios_Comunidad").document(email).set(usr);
 
         finish();
 
@@ -160,6 +150,10 @@ public class IntroducirCodigo extends AppCompatActivity {
 
                                 listaComunidades.add(document.toObject(Comunidades.class));
                                 doc.put(document.getData().get("code").toString(), document.getId());
+                                List<String> a = new ArrayList<>();
+                                a.add(document.getData().get("code").toString());
+                                a.add(document.getData().get("name").toString());
+                                comunidades.put(document.getId(),a);
                             }
 
                         } else {
@@ -170,32 +164,6 @@ public class IntroducirCodigo extends AppCompatActivity {
                 });
 
     }
-    private void leerUsurarios() {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-
-        db.collection("Comunidades").document(documentId).collection("Usuarios_Comunidad_"+documentId)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " +
-                                        document.getData());
-
-
-                                usr.put(document.getData().get("email").toString(), document.getId());
-                            }
-
-                        } else {
-                            Log.d(TAG, "Error getting documents: ",
-                                    task.getException());
-                        }
-                    }
-                });
-
-
-    }
 
 }
