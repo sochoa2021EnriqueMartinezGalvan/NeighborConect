@@ -43,7 +43,7 @@ public class PantallaPrincipalActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
     private TextView tvUsuario, tvCerrarSesion;
-    private Button btCrear,btEntrar;
+
     private int numComunidadesUsuario=0;
 
     private String email;
@@ -79,26 +79,6 @@ public class PantallaPrincipalActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_pantalla_principal);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-
-        btCrear = findViewById(R.id.btCrear);
-        btEntrar = findViewById(R.id.btEntar);
-
-
-
-        btCrear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                crearComunidad();
-            }
-        });
-        btEntrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                entrarComunidad();
-            }
-        });
-
-
 
 
         NavigationView navigation = (NavigationView) findViewById(R.id.nav_view);

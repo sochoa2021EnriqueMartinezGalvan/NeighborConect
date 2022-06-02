@@ -86,7 +86,7 @@ public class IncidenciasAdapter extends FirestoreRecyclerAdapter<Incidencias, In
                 public void onClick(View v) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                     builder.setTitle("Creador: "+tvcreador.getText().toString());
-                    builder.setMessage("Fecha: "+tvFecha.getText().toString()+"\nDescripcion de la incidencia: \n"+tvDescripcion.getText().toString());
+                    builder.setMessage("Fecha: "+tvFecha.getText().toString()+"\n\nDescripcion de la incidencia: \n"+tvDescripcion.getText().toString());
                     builder.setPositiveButton("Aceptar", null);
 
                     AlertDialog dialog = builder.create();

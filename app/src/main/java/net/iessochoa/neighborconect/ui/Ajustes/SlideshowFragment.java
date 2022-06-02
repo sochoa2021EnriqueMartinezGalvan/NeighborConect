@@ -1,4 +1,4 @@
-package net.iessochoa.neighborconect.ui.slideshow;
+package net.iessochoa.neighborconect.ui.Ajustes;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import net.iessochoa.neighborconect.R;
 import net.iessochoa.neighborconect.databinding.FragmentSlideshowBinding;
 
 public class SlideshowFragment extends Fragment {

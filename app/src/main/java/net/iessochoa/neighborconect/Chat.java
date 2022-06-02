@@ -3,6 +3,7 @@ package net.iessochoa.neighborconect;
 import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,6 +28,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
@@ -78,6 +80,7 @@ public class Chat extends AppCompatActivity {
             System.out.println(ex.getCause());
         }
 
+
         etMensaje = findViewById(R.id.etMensaje);
         btEnviarMensaje = findViewById(R.id.btEnviarMensaje);
 
@@ -85,12 +88,18 @@ public class Chat extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 enviarMensaje();
-                defineAdaptador();
-
             }
         });
 
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+        db.collection("Comunidades").document(idComunidad).collection("Chat").addSnapshotListener(new EventListener() {
+
+            @Override
+            public void onEvent(@Nullable Object value, @Nullable FirebaseFirestoreException error) {
+
+            }
+        });
 
 
     }
@@ -167,15 +176,76 @@ public class Chat extends AppCompatActivity {
             @Override
             public void onChildChanged(@NonNull ChangeEventType type, @NonNull
                     DocumentSnapshot snapshot, int newIndex, int oldIndex) {
-                /*int n=1;
+                int n = 1;
                 try {
-                   n= Integer.parseInt(numMensajes);
+                    n = Integer.parseInt(numMensajes);
                     a += 1;
 
-                    rvChat.smoothScrollToPosition(n-1);
-                }catch (Exception e){
+                    rvChat.smoothScrollToPosition(n - 1);
+                } catch (Exception e) {
 
-                }*/
+                }
+
+
+            }
+
+            @Override
+            public void onDataChanged() {
+                obtenerdatos();
+            }
+
+            @Override
+            public void onError(@NonNull FirebaseFirestoreException e) {
+            }
+        });
+    }
+
+    public void obtenerdatos() {
+        //consulta en Firebase
+        Query query = FirebaseFirestore.getInstance()
+//coleccion conferencias
+                .collection("Comunidades")
+//documento: conferencia actual
+                .document(idComunidad)
+//colección chat de la conferencia
+                .collection("Chat")
+//obtenemos la lista ordenada por fecha
+                .orderBy("fechaCreacion",
+                        Query.Direction.ASCENDING);
+//Creamos la opciones del FirebaseAdapter
+        FirestoreRecyclerOptions<Mensaje> options = new
+                FirestoreRecyclerOptions.Builder<Mensaje>()
+//consulta y clase en la que se guarda los datos
+                .setQuery(query, Mensaje.class)
+                .setLifecycleOwner(this)
+                .build();
+//si el usuario ya habia seleccionado otra conferencia, paramos las        escucha
+        if (adapter != null) {
+            adapter.stopListening();
+        }
+//Creamos el adaptador
+        adapter = new ChatAdapter(options);
+//asignamos el adaptador
+        rvChat.setAdapter(adapter);
+//comenzamos a escuchar. Normalmente solo tenemos un adaptador, esto  tenemos que
+        //hacerlo en el evento onStar, como indica la documentación
+        adapter.startListening();
+//Podemos reaccionar ante cambios en la query( se añade un mesaje).Nosotros,
+        // //lo que necesitamos es mover el scroll
+        // del recyclerView al inicio para ver el mensaje nuevo
+        adapter.getSnapshots().addChangeEventListener(new ChangeEventListener() {
+            @Override
+            public void onChildChanged(@NonNull ChangeEventType type, @NonNull
+                    DocumentSnapshot snapshot, int newIndex, int oldIndex) {
+                int n = 1;
+                try {
+                    n = Integer.parseInt(numMensajes);
+                    a += 1;
+
+                    rvChat.smoothScrollToPosition(n - 1);
+                } catch (Exception e) {
+
+                }
 
 
             }

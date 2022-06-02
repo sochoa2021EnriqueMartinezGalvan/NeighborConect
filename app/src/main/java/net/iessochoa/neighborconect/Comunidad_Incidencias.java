@@ -162,12 +162,65 @@ public class Comunidad_Incidencias extends AppCompatActivity {
 
             @Override
             public void onDataChanged() {
+                obtenerdatos();
             }
 
             @Override
             public void onError(@NonNull FirebaseFirestoreException e) {
             }
         });
+    }
+
+    public void obtenerdatos(){
+        //consulta en Firebase
+        Query query = FirebaseFirestore.getInstance()
+//coleccion conferencias
+                .collection("Comunidades")
+//documento: conferencia actual
+                .document(idComunidad)
+//colección chat de la conferencia
+                .collection("Incidencias")
+//obtenemos la lista ordenada por fecha
+                .orderBy("fechaCreacion",
+                        Query.Direction.DESCENDING);
+//Creamos la opciones del FirebaseAdapter
+        FirestoreRecyclerOptions<Incidencias> options = new
+                FirestoreRecyclerOptions.Builder<Incidencias>()
+//consulta y clase en la que se guarda los datos
+                .setQuery(query, Incidencias.class)
+                .setLifecycleOwner(this)
+                .build();
+//si el usuario ya habia seleccionado otra conferencia, paramos las        escucha
+        if (adapter != null) {
+            adapter.stopListening();
+        }
+//Creamos el adaptador
+        adapter = new IncidenciasAdapter(options);
+
+//asignamos el adaptador
+        rvIncidencias.setAdapter(adapter);
+//comenzamos a escuchar. Normalmente solo tenemos un adaptador, esto  tenemos que
+        //hacerlo en el evento onStar, como indica la documentación
+        adapter.startListening();
+//Podemos reaccionar ante cambios en la query( se añade un mesaje).Nosotros,
+        // //lo que necesitamos es mover el scroll
+        // del recyclerView al inicio para ver el mensaje nuevo
+        adapter.getSnapshots().addChangeEventListener(new ChangeEventListener() {
+            @Override
+            public void onChildChanged(@NonNull ChangeEventType type, @NonNull
+                    DocumentSnapshot snapshot, int newIndex, int oldIndex) {
+                rvIncidencias.smoothScrollToPosition(0);
+            }
+
+            @Override
+            public void onDataChanged() {
+            }
+
+            @Override
+            public void onError(@NonNull FirebaseFirestoreException e) {
+            }
+        });
+
     }
 
     private void obtenerNumeroDeMensajes() {
@@ -185,6 +238,7 @@ public class Comunidad_Incidencias extends AppCompatActivity {
                                 Log.d(TAG, document.getId() + " => " +
                                         document.getData());
                                 numMensajes += 1;
+
                             }
 
 

@@ -1,4 +1,4 @@
-package net.iessochoa.neighborconect.ui.slideshow;
+package net.iessochoa.neighborconect.ui.Ajustes;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

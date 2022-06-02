@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background3"
     tools:context=".IntroducirCodigo">
 
     <EditText
@@ -11,6 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="183dp"
+        android:background="@color/white"
         android:ems="10"
         android:hint="Codigo"
         android:inputType="textPersonName"
@@ -28,4 +30,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etInsertarCodigo" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/etInsertarCodigo"
+        app:layout_constraintEnd_toStartOf="@+id/etInsertarCodigo"
+        app:layout_constraintTop_toTopOf="@+id/etInsertarCodigo"
+        app:srcCompat="@drawable/ic_action_code" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Introducir código"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toTopOf="@+id/etInsertarCodigo"
+        app:layout_constraintEnd_toEndOf="@+id/etInsertarCodigo"
+        app:layout_constraintStart_toStartOf="@+id/etInsertarCodigo"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

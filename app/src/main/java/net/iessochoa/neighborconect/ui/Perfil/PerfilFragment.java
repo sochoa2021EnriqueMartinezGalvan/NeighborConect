@@ -1,4 +1,4 @@
-package net.iessochoa.neighborconect.ui.gallery;
+package net.iessochoa.neighborconect.ui.Perfil;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -33,23 +33,21 @@ import com.google.firebase.firestore.Query;
 import net.iessochoa.neighborconect.InicioSesionActivity;
 import net.iessochoa.neighborconect.R;
 import net.iessochoa.neighborconect.adapter.ComunidadAdapter;
-import net.iessochoa.neighborconect.adapter.IncidenciasAdapter;
 import net.iessochoa.neighborconect.databinding.FragmentGalleryBinding;
 import net.iessochoa.neighborconect.model.Comunidades;
-import net.iessochoa.neighborconect.model.Incidencias;
 
 import java.util.ArrayList;
 import java.util.Set;
 
-public class GalleryFragment extends Fragment {
+public class PerfilFragment extends Fragment {
 
-    private GalleryViewModel galleryViewModel;
+    private PerfilViewModel galleryViewModel;
     private FragmentGalleryBinding binding;
 
     private FirebaseAuth mAuth;
     private FirebaseUser userFB;
 
-    private TextView tvUsuarioPerfil, tvNCU;
+    private TextView tvUsuarioPerfil;
     private Button btCambiarPass;
     private String email;
     private int numComunidadesUsuario = 0;
@@ -63,20 +61,18 @@ public class GalleryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         galleryViewModel =
-                new ViewModelProvider(this).get(GalleryViewModel.class);
+                new ViewModelProvider(this).get(PerfilViewModel.class);
 
         binding = FragmentGalleryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
 
-        SharedPreferences sharedPref = getActivity().getSharedPreferences("ncu", Activity.MODE_PRIVATE);
+        /*SharedPreferences sharedPref = getActivity().getSharedPreferences("ncu", Activity.MODE_PRIVATE);
 
         int ncu = sharedPref.getInt("ncu", -1);
         Set<String> set = sharedPref.getStringSet("idCom", null);
 
-        for (String s : set) {
-            System.out.println(s + "--------");
-        }
+       */
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -92,9 +88,9 @@ public class GalleryFragment extends Fragment {
 
         tvUsuarioPerfil = binding.tvUsuarioPerfil;
         btCambiarPass = binding.btCambiarPass;
-        tvNCU = binding.tvNCU;
 
-        tvUsuarioPerfil.setText("Usuario: " + userFB.getEmail());
+
+        tvUsuarioPerfil.setText(userFB.getEmail());
         btCambiarPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,7 +99,7 @@ public class GalleryFragment extends Fragment {
             }
         });
 
-        tvNCU.setText("Numero de comunidades en las que estas: " + String.valueOf(ncu));
+
 
         return root;
     }
@@ -141,7 +137,8 @@ public class GalleryFragment extends Fragment {
 //documento: conferencia actual
                 .document(email)
 //colección chat de la conferencia
-                .collection("Comunidades");//Creamos la opciones del FirebaseAdapter
+                .collection("Comunidades")
+                .orderBy("name",Query.Direction.DESCENDING);//Creamos la opciones del FirebaseAdapter
         FirestoreRecyclerOptions<Comunidades> options = new
                 FirestoreRecyclerOptions.Builder<Comunidades>()
 //consulta y clase en la que se guarda los datos

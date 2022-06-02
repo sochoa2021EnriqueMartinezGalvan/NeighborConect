@@ -4,18 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background3"
     tools:context=".CrearComunidad">
 
     <EditText
         android:id="@+id/etCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="86dp"
         android:layout_marginTop="109dp"
-        android:layout_marginEnd="115dp"
+        android:background="@color/white"
         android:ems="10"
         android:hint="Codigo de la comunidad"
         android:inputType="textPersonName"
+        android:maxLength="20"
+        android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,14 +26,16 @@
         android:id="@+id/etName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="86dp"
         android:layout_marginTop="24dp"
-        android:layout_marginEnd="115dp"
+        android:background="@color/white"
         android:ems="10"
         android:hint="Nombre de la comunidad"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:maxLength="15"
+        android:maxLines="20"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="@+id/etCode"
+        app:layout_constraintStart_toStartOf="@+id/etCode"
         app:layout_constraintTop_toBottomOf="@+id/etCode" />
 
     <Button
@@ -40,8 +44,39 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="Crear"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/etName"
         app:layout_constraintHorizontal_bias="0.466"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/etName"
         app:layout_constraintTop_toBottomOf="@+id/etName" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/etCode"
+        app:layout_constraintEnd_toStartOf="@+id/etCode"
+        app:layout_constraintTop_toTopOf="@+id/etCode"
+        app:srcCompat="@drawable/ic_action_code" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/etName"
+        app:layout_constraintEnd_toStartOf="@+id/etName"
+        app:layout_constraintTop_toTopOf="@+id/etName"
+        app:srcCompat="@drawable/ic_action_comunidad" />
+
+    <TextView
+        android:id="@+id/tvCrearComunidad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Crear Comunidad"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toTopOf="@+id/etCode"
+        app:layout_constraintEnd_toEndOf="@+id/etCode"
+        app:layout_constraintStart_toStartOf="@+id/etCode"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
